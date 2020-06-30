@@ -3,6 +3,8 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 
+// import localStorage from '../utils/storageSaver';
+
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,31 +16,11 @@ class App extends Component {
     filter: '',
   };
 
-  saveData = () => {
-    localStorage.setItem('phonebook', JSON.stringify(this.state));
-  };
-
-  loadData = () => {
-    const contacts = JSON.parse(localStorage.getItem('phonebook'));
-
-    if (contacts) {
-      this.setState(contacts);
-    }
-  };
-
   handleAddContact = ({ name, number }) => {
     const { contacts } = this.state;
 
     if (contacts.some(contact => contact.name === name)) {
-      toast.warn(`${name} is already in contacts`, {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.warn(`${name} is already in contacts`);
 
       return;
     }
@@ -77,12 +59,26 @@ class App extends Component {
     }));
   };
 
+  saveData = () => {
+    localStorage.setItem('phonebook', JSON.stringify(this.state));
+  };
+
+  loadData = () => {
+    const contacts = JSON.parse(localStorage.getItem('phonebook'));
+
+    if (contacts) {
+      this.setState(contacts);
+    }
+  };
+
   componentDidMount() {
     this.loadData();
+    // localStorage.save('phonebook', this.state);
   }
 
   componentDidUpdate() {
     this.saveData();
+    // localStorage.get('phonebook');
   }
 
   render() {
@@ -102,17 +98,7 @@ class App extends Component {
           contacts={this.filterContacts()}
           onRemove={this.handleRemoveContact}
         />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        <ToastContainer position="top-center" />
       </div>
     );
   }

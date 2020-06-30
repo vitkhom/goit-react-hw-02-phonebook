@@ -25,6 +25,12 @@ class App extends Component {
       return;
     }
 
+    if (!name || !number) {
+      toast.warn(`Please enter the contact name and number`);
+
+      return;
+    }
+
     this.setState(({ contacts }) => ({
       contacts: [
         ...contacts,
@@ -60,14 +66,14 @@ class App extends Component {
   };
 
   saveData = () => {
-    localStorage.setItem('phonebook', JSON.stringify(this.state));
+    localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
   };
 
   loadData = () => {
-    const contacts = JSON.parse(localStorage.getItem('phonebook'));
+    const savedContacts = JSON.parse(localStorage.getItem('phonebook'));
 
-    if (contacts) {
-      this.setState(contacts);
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
     }
   };
 

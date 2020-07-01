@@ -3,8 +3,6 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 
-// import localStorage from '../utils/storageSaver';
-
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -79,12 +77,10 @@ class App extends Component {
 
   componentDidMount() {
     this.loadData();
-    // localStorage.save('phonebook', this.state);
   }
 
   componentDidUpdate() {
     this.saveData();
-    // localStorage.get('phonebook');
   }
 
   render() {

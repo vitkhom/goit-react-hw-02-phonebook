@@ -63,26 +63,6 @@ class App extends Component {
     }));
   };
 
-  saveData = () => {
-    localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
-  };
-
-  loadData = () => {
-    const savedContacts = JSON.parse(localStorage.getItem('phonebook'));
-
-    if (savedContacts) {
-      this.setState({ contacts: savedContacts });
-    }
-  };
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  componentDidUpdate() {
-    this.saveData();
-  }
-
   render() {
     const { contacts } = this.state;
 
